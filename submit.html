@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ghibli Animation</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: #0099f7; /* fallback for old browsers */
+        background: -webkit-linear-gradient(
+          to right,
+          #e84845,
+          #2c8bc7
+        ); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #f11712, #0099f7);
+        font-family: Arial, sans-serif;
+      }
+      .container {
+        position: relative;
+        text-align: center;
+      }
+      .character {
+        border-radius: 20px;
+        width: 300px;
+        animation: wave 0.5s infinite alternate;
+      }
+      @keyframes wave {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(5deg);
+        }
+      }
+      .bubble {
+        position: absolute;
+        top: 10px;
+        right: -50px;
+        background: white;
+        padding: 10px;
+        border-radius: 10px;
+        border: 2px solid black;
+        opacity: 0;
+        transition: opacity 0.5s;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <img
+        src="WhatsApp Image 2025-03-29 at 18.02.03_ec50eca5.jpg"
+        alt="Ghibli Character"
+        class="character"
+        id="character"
+      />
+      <div class="bubble" id="bubble">HELLO_My Friend!</div>
+      <div style="margin-top: 40px;">
+        <input
+          type="text"
+          id="chatInput"
+          placeholder="Type your message..."
+          style="
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            width: 180px;
+          "
+        />
+        <button
+          id="sendBtn"
+          style="
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            background: #2c8bc7;
+            color: white;
+            font-weight: bold;
+          "
+        >
+          Send
+        </button>
+      </div>
+    </div>
+    <script>
+      const character = document.getElementById("character");
+      const bubble = document.getElementById("bubble");
+      const chatInput = document.getElementById("chatInput");
+      const sendBtn = document.getElementById("sendBtn");
+
+      function getBotResponse(message) {
+        const msg = message.toLowerCase();
+        if (msg.includes("hello") || msg.includes("hi")) {
+          return "Hello! How can I help you?";
+        } else if (msg.includes("your name")) {
+          return "I'm your friendly Ghibli bot!";
+        } else if (msg.includes("how are you")) {
+          return "I'm great, thanks for asking!";
+        } else if (msg.includes("bye")) {
+          return "Goodbye! Have a nice day!";
+        } else if (msg.includes("thank")) {
+          return "You're welcome!";
+        } else {
+          return "Sorry, I didn't understand that. Try asking something else!";
+        }
+      }
+
+      function showBubble(message) {
+        bubble.textContent = message;
+        bubble.style.opacity = 1;
+        setTimeout(() => {
+          bubble.style.opacity = 0;
+        }, 2000);
+      }
+
+      character.addEventListener("click", () => {
+        showBubble("HELLO_My Friend!");
+      });
+
+      sendBtn.addEventListener("click", () => {
+        const msg = chatInput.value.trim();
+        if (msg) {
+          showBubble("You: " + msg);
+          setTimeout(() => {
+            showBubble(getBotResponse(msg));
+          }, 1200);
+          chatInput.value = "";
+        }
+      });
+
+      chatInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          sendBtn.click();
+        }
+      });
+    </script>
+  </body>
+</html>
